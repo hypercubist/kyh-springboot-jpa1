@@ -1,6 +1,7 @@
 package jpabook.kyhspringbootjpa1.domain.item;
 
 import jpabook.kyhspringbootjpa1.domain.Category;
+import jpabook.kyhspringbootjpa1.exception.NotEnoughStockException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,4 +27,29 @@ public abstract class Item {
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
+
+    //비즈니스 로직
+
+    /**
+     * 재고 수량 증가
+     * @param quantity
+     */
+    public void addStock(int quantity) {
+        this.stockQuantity = quantity;
+    }
+
+
+    /**
+     * 재고 수량 감소
+     * @param quantity
+     */
+    public void removeStock(int quantity) {
+        int restStock = this.stockQuantity - quantity;
+        if (stockQuantity < 0) {
+            throw new NotEnoughStockException("need more stock");
+        }
+        this.stockQuantity = restStock;
+    }
+
+
 }
