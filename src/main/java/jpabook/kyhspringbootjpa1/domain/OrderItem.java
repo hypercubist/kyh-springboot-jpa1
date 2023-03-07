@@ -1,7 +1,9 @@
 package jpabook.kyhspringbootjpa1.domain;
 
 import jpabook.kyhspringbootjpa1.domain.item.Item;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -9,6 +11,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "order_item")
 @Getter @Setter
+//OrderItem 객체를 쉽게 만들 수 없도록 접근제한
+//jpa는 protected까지 허용함
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
 
     @Id @GeneratedValue
